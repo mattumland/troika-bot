@@ -1,0 +1,17 @@
+{
+  "name": "troika-bot",
+  "version": "1.0.0",
+  "description": "A discord bot that manages procedures for the Troika science fantasy RPG.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "matt umland",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0"
+  }
+}
