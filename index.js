@@ -2,7 +2,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { token } = require('./config.json');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const Game = require('./models/Game.js')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -10,7 +9,6 @@ client.login(token);
 client.commands = new Collection();
 
 client.once(Events.ClientReady, () => {
-	Game.sync({ force: true }); //remove force before deploying, this is for production only
 	console.log(`Logged in as ${client.user.tag}!`);
 });
 
