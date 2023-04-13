@@ -2,48 +2,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { token } = require('./config.json');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { Sequelize, Model } = require('sequelize');
+const Game = require('./models/Game.js')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-const sequelize = new Sequelize('database', 'root', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false, //set logging to false before deploying, this is for production only
-	storage: 'database.sqlite',
-});
-
-class Game extends Model {
-
-}
-
-Game.init( {
-		id: {
-			type: Sequelize.STRING,
-			primaryKey: true,
-			unique: true,
-		},
-		pcs: {
-			type: Sequelize.STRING,
-			defaultValue: ""
-		},
-		defaultStack: {
-			type: Sequelize.STRING,
-			defaultValue: ""
-		},
-		currentStack: {
-			type: Sequelize.STRING,
-			defaultValue: ""
-		},
-		currentTurn: {
-			type: Sequelize.STRING,
-			defaultValue: ""
-		} 
-	}, {
-		sequelize,
-		timestamps: false,
-		modelName: "Game"
-}); 
 
 client.login(token);
 client.commands = new Collection();
