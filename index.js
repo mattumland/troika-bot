@@ -1,11 +1,57 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Sequelize, Model } = require('sequelize');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+const sequelize = new Sequelize('database', 'root', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false, //set logging to false before deploying, this is for production only
+	storage: 'database.sqlite',
+});
+
+class Game extends Model {
+
+}
+
+Game.init( {
+		id: {
+			type: Sequelize.STRING,
+			primaryKey: true,
+			unique: true,
+		},
+		pcs: {
+			type: Sequelize.STRING,
+			defaultValue: ""
+		},
+		defaultStack: {
+			type: Sequelize.STRING,
+			defaultValue: ""
+		},
+		currentStack: {
+			type: Sequelize.STRING,
+			defaultValue: ""
+		},
+		currentTurn: {
+			type: Sequelize.STRING,
+			defaultValue: ""
+		} 
+	}, {
+		sequelize,
+		timestamps: false,
+		modelName: "Game"
+}); 
+
 client.login(token);
 client.commands = new Collection();
+
+client.once(Events.ClientReady, () => {
+	Game.sync({ force: true }); //remove force before deploying, this is for production only
+	console.log(`Logged in as ${client.user.tag}!`);
+});
 
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
