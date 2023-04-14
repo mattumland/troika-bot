@@ -10,4 +10,10 @@ const shuffleArray = (array) => {
   return array.sort(() => Math.random() - 0.5);
 }
 
-module.exports = { stringToArray, arrayToString, shuffleArray }
+const removeWhiteSpace = (string) => {
+  const array = stringToArray(string);
+  const trimmedArray = array.map(string => string.trim());
+  return arrayToString(trimmedArray);
+}
+
+module.exports = { stringToArray, arrayToString, shuffleArray, removeWhiteSpace }

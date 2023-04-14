@@ -2,8 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { token } = require('./config.json');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const Game = require('./game.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+global.game = new Game();
 
 client.login(token);
 client.commands = new Collection();
