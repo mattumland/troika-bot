@@ -1,11 +1,13 @@
-const Game = require('./dbObjects.js');
-
-const createGame = async (id) => {
-  return await Game.create({id: id})
+const stringToArray = (string) => {
+  return string.split(',');
 }
 
-const deleteGame = async (id) => {
-  await Game.destroy({ where: { id: id } })
+const arrayToString = (array) => {
+  return array.toString();
 }
 
-module.exports = { createGame, deleteGame }
+const shuffleArray = (array) => {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+module.exports = { stringToArray, arrayToString, shuffleArray }

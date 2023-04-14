@@ -1,12 +1,52 @@
 const test = require('ava');
-// const Game = require('./dbObjects.js');
+const Game = require('./game.js');
+const { stringToArray, arrayToString } = require('./gameHelpers.js')
 
-const {createGame, deleteGame} = require('./gameHelpers.js')
+// Game class tests
 
-test('adds pcs to a game', async t => {
-  const testGame = createGame('testid');
+test('adds pcs to a game', t => {
+  const game = new Game()
   const pcNames = 'Ringo, Stevie, Blue';
-  testGame.pcs = pcNames;
-  await testGame.save();
-  t.assert(await testGame.pcs === pcNames);
+  game.pcs = pcNames;
+  t.assert(game.pcs === pcNames);
+});
+
+test('constructs games with pc names when provided', t => {
+  const pcNames = 'Ringo, Stevie, Blue';
+  const game = new Game(pcNames);
+  t.assert(game.pcs === pcNames);
+});
+
+// Game method unit tests
+
+test('builds a default stack when given a number of enemies', t => {
+  const pcNames = 'Ringo, Stevie, Blue';
+  const pcTokenCount = 2;
+  const totalPcTokenCount = (stringToArray(pcNames).length) * pcTokenCount;
+  const enemyCount = 3;
+
+  const game = new Game(pcNames);
+  const startingStackLength = game.defaultStack.length;
+  game.createStack(enemyCount);
+  const enemyTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Enemy'));
+  const ringoTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Ringo'));
+
+  t.assert(stringToArray(game.defaultStack).length === totalPcTokenCount + enemyCount + startingStackLength); 
+  t.assert(enemyTokenCount.length === enemyCount);
+  t.assert(ringoTokenCount.length === pcTokenCount);
+});
+
+
+// gameHelper unit tests
+
+test('converts comma separated string into an array', t => {
+  const nameList = 'Billy, Bill, Billerson';
+  const nameArray = stringToArray(nameList);
+  t.assert(nameArray.length === 3)
+});
+
+test('converts array into comma separated string', t => {
+  const nameArray = ['Billy', 'Bill', 'Billerson'];
+  const nameList = arrayToString(nameArray);
+  t.assert(nameList.length === 20)
 });
