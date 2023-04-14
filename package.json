@@ -4,7 +4,8 @@
   "description": "A discord bot that manages procedures for the Troika science fantasy RPG.",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "deploy": "node deploy-commands.js"
   },
   "author": "matt umland",
   "license": "ISC",
