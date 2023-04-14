@@ -26,15 +26,24 @@ test('builds a default stack when given a number of enemies', t => {
   const enemyCount = 3;
 
   const game = new Game(pcNames);
-  const startingStackLength = game.defaultStack.length;
+  const startingStackLength = stringToArray(game.defaultStack).length;
   game.createStack(enemyCount);
   const enemyTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Enemy'));
   const ringoTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Ringo'));
 
   t.assert(stringToArray(game.defaultStack).length === totalPcTokenCount + enemyCount + startingStackLength); 
+  t.assert(stringToArray(game.currentStack).length === totalPcTokenCount + enemyCount + startingStackLength); 
   t.assert(enemyTokenCount.length === enemyCount);
   t.assert(ringoTokenCount.length === pcTokenCount);
   t.assert(game.defaultStack[0] != 'End of Turn');
+});
+
+test('removes a token from the stack, places it current turn', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  game.createStack(5);
+  game.drawToken();
+  t.truthy(game.currentTurn);
+  t.assert(stringToArray(game.currentStack).length === 11);
 });
 
 
