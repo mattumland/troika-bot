@@ -2,10 +2,10 @@ const { stringToArray, arrayToString, shuffleArray } = require('./gameHelpers.js
 
 class Game {
   constructor(pcs = '', defaultStack) {
-    this.pcs = pcs
-    this.defaultStack = defaultStack || ''
-    this.currentStack = ''
-    this.currentTurn = ''
+    this.pcs = pcs;
+    this.defaultStack = defaultStack || '';
+    this.currentStack = '';
+    this.currentTurn = '';
   }
 
   getRandomPosition(max) {
@@ -18,7 +18,6 @@ class Game {
   }
 
   createStack(enemyCount) {
-    // the slash command needs to check if the pc list is empty and prompt an input before calling this command
     const stack = stringToArray('End of Turn')
     
     const pcStack = stringToArray(this.pcs);
@@ -33,12 +32,20 @@ class Game {
     }
     this.defaultStack = arrayToString(assembledStack);
     this.currentStack = arrayToString(assembledStack);
+    this.currentTurn = ''; 
   }
   
   drawToken() {
     const newStack = shuffleArray(stringToArray(this.currentStack));
     this.currentTurn = newStack.shift();
     this.currentStack = arrayToString(newStack);
+  }
+
+  reset() {
+    this.pcs = '';
+    this.defaultStack = '';
+    this.currentStack = '';
+    this.currentTurn = '';
   }
 }
 

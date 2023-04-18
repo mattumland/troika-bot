@@ -2,9 +2,10 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('Replies with Pong!'),
+		.setName('reset')
+		.setDescription('Erases all game data.'),
 	async execute(interaction) {
-		await interaction.reply('Pong!');
+    global.game.reset();
+		await interaction.reply('Game data reset.');
 	},
 };
