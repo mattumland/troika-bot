@@ -10,7 +10,9 @@ module.exports = {
     if (global.game.currentTurn !== 'End of Turn') {
       await interaction.reply(`${global.game.currentTurn}`)
     } else {
+      global.game.currentTurn = ''
       const reuse = new ButtonBuilder()
+
         .setCustomId('reuse')
         .setLabel('Reuse previous stack')
         .setStyle(ButtonStyle.Primary);
@@ -32,44 +34,45 @@ module.exports = {
       const stackConfirmation = await response.awaitMessageComponent();
 
       if (stackConfirmation.customId === 'reuse') {
-        global.game.currentStack === global.game.defaultStack;
-        global.game.currentTurn === '';
-        await stackConfirmation.reply('Stack is ready. Good luck!')
+        global.game.currentStack = global.game.defaultStack;
+        global.game.currentTurn = '';
+        await stackConfirmation.reply('Previous stack is reset.')
       } else {
-        const newStackModal  = new ModalBuilder()
-          .setCustomId('newStack')
-          .setTitle('Create New Stack')
-        
-        const pcInput = new TextInputBuilder()
-          .setCustomId('pcs')
-          .setLabel('Confirm the list of PCs')
-          .setValue(`${global.game.pcs}`)
-          .setStyle(TextInputStyle.Short);
+          const createStackModal  = new ModalBuilder()
+              .setCustomId('createStack')
+              .setTitle('Create New Stack')
+            
+          const pcInput = new TextInputBuilder()
+            .setCustomId('pcs')
+            .setLabel('Confirm the list of PCs')
+            .setValue(`${global.game.pcs}`)
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
 
-        const enemyCountInput = new TextInputBuilder()
-          .setCustomId('enemyCount')
-          .setLabel('How many enemy tokens?')
-          .setValue('0')
-          .setStyle(TextInputStyle.Short);
+          const enemyCountInput = new TextInputBuilder()
+            .setCustomId('enemyCount')
+            .setLabel('How many enemy tokens?')
+            .setValue('1')
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true);
 
-        const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
-        const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
+          const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
+          const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
 
-        newStackModal.addComponents(pcInputRow, enemyInputRow);
+          createStackModal.addComponents(pcInputRow, enemyInputRow);
 
-        await stackConfirmation.showModal(newStackModal);
-        
-        const pcList = stackConfirmation.fields.getTextInputValue('pcInput');
-	      const enemyCount = parseInt(stackConfirmation.fields.getTextInputValue('enemyCountInput'));
-        
-        if (enemyCount === NaN) {
-          await stackConfirmation.followUp({ content: 'You didn`t input a number of enemy tokens. Please type `/stack` to build a new stack.' });
-        }
+          await stackConfirmation.showModal(createStackModal);
 
-        global.game.pcs = pcList; 
-        global.game.createStack(enemyCount);
-
-        await stackConfirmation.followUp({ content: 'New stack created. Good luck!' });
+          const filter = (stackConfirmation) => stackConfirmation.customId === 'createStack';
+          
+          await stackConfirmation.awaitModalSubmit({ filter, time: 15_000 })
+            .then(interaction => {
+              global.game.pcs = interaction.fields.getTextInputValue('pcs');
+              const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCount'));
+              global.game.createStack(enemyCount);
+              interaction.reply({ content: 'New stack created. Good luck!' });
+            })
+            .catch(err => console.log('No modal submit interaction was collected'));
       }   
     }
   },    

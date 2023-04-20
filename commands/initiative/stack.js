@@ -16,35 +16,36 @@ module.exports = {
         .setCustomId('createStack')
         .setTitle('Create New Stack')
       
-      const pcInput = new TextInputBuilder()
-        .setCustomId('pcs')
-        .setLabel('Confirm the list of PCs')
-        .setValue(`${global.game.pcs}`)
-        .setStyle(TextInputStyle.Short);
+    const pcInput = new TextInputBuilder()
+      .setCustomId('pcs')
+      .setLabel('Confirm the list of PCs')
+      .setValue(`${global.game.pcs}`)
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true);
 
-      const enemyCountInput = new TextInputBuilder()
-        .setCustomId('enemyCount')
-        .setLabel('How many enemy tokens?')
-        .setValue('0')
-        .setStyle(TextInputStyle.Short);
+    const enemyCountInput = new TextInputBuilder()
+      .setCustomId('enemyCount')
+      .setLabel('How many enemy tokens?')
+      .setValue('1')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true);
 
-      const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
-      const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
+    const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
+    const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
 
-      createStackModal.addComponents(pcInputRow, enemyInputRow);
+    createStackModal.addComponents(pcInputRow, enemyInputRow);
 
-      await interaction.showModal(createStackModal);
-      
-      const pcList = interaction.fields.getTextInputValue('pcInput');
-      const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCountInput'));
-      
-      if (enemyCount === NaN) {
-        await interaction.followUp({ content: 'You didn`t input a number of enemy tokens. Please type `/stack` to build a new stack.' });
-      }
+    await interaction.showModal(createStackModal);
 
-      global.game.pcs = pcList; 
-      global.game.createStack(enemyCount);
-
-      await interaction.followUp({ content: 'New stack created. Good luck!' });
+    const filter = (interaction) => interaction.customId === 'createStack';
+    
+    await interaction.awaitModalSubmit({ filter, time: 15_000 })
+      .then(interaction => {
+        global.game.pcs = interaction.fields.getTextInputValue('pcs');
+        const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCount'));
+        global.game.createStack(enemyCount);
+        interaction.reply({ content: 'New stack created. Good luck!' });
+      })
+      .catch(err => console.log('No modal submit interaction was collected'));
   },    
 };
