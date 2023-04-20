@@ -69,8 +69,12 @@ module.exports = {
             .then(interaction => {
               global.game.pcs = interaction.fields.getTextInputValue('pcs');
               const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCount'));
-              global.game.createStack(enemyCount);
-              interaction.reply({ content: 'New stack created. Good luck!' });
+              if (enemyCount < 0) {
+                  interaction.reply({ content: 'Stack not created - You must enter a number greater than 0' });
+              } else {
+                global.game.createStack(enemyCount);
+                interaction.reply({ content: 'New stack created. Good luck!' });
+              }
             })
             .catch(err => console.log('No modal submit interaction was collected'));
       }   
