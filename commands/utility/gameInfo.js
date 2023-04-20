@@ -5,7 +5,7 @@ module.exports = {
     .setName('game')
     .setDescription('Returns the contents of the game object'),
   async execute(interaction) {
-    const pcs = global.game.pcs;
+    const pcs = global.game.displayPcs();
     const defaultStack = global.game.defaultStack;
     const currentStack = global.game.currentStack;
     const currentTurn = global.game.currentTurn;

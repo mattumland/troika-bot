@@ -46,6 +46,10 @@ test('removes a token from the stack, places it current turn', t => {
   t.assert(stringToArray(game.currentStack).length === 11);
 });
 
+test('displays a formatted list of PCs', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  t.assert(game.displayPcs() === 'Rad, Marth, Squimp');
+})
 
 // gameHelper unit tests
 

@@ -35,6 +35,10 @@ class Game {
     this.currentTurn = ''; 
   }
   
+  displayPcs() {
+    return this.pcs.replaceAll(',', ', ');
+  }
+
   drawToken() {
     const newStack = shuffleArray(stringToArray(this.currentStack));
     this.currentTurn = newStack.shift();

@@ -19,7 +19,7 @@ module.exports = {
     const pcInput = new TextInputBuilder()
       .setCustomId('pcs')
       .setLabel('Confirm the list of PCs')
-      .setValue(`${global.game.pcs}`)
+      .setValue(`${global.game.displayPcs()}`)
       .setStyle(TextInputStyle.Short)
       .setRequired(true);
 
