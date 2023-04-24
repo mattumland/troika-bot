@@ -49,9 +49,9 @@ class Game {
   }
 
   drawToken() {
-    const newStack = shuffleArray(stringToArray(this.currentStack));
+    const newStack = stringToArray(this.currentStack);
     this.currentTurn = newStack.shift();
-    this.currentStack = arrayToString(newStack);
+    this.currentStack = arrayToString(shuffleArray(newStack));
   }
 
   reset() {

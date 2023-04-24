@@ -1,4 +1,5 @@
 const { ButtonBuilder, ButtonStyle, SlashCommandBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, ModalBuilder } = require('discord.js');
+const { NewStackModal } = require('../../stackModal.js')
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -39,45 +40,7 @@ module.exports = {
         global.game.currentTurn = '';
         await stackConfirmation.reply('Previous stack is reset.')
       } else {
-          const createStackModal  = new ModalBuilder()
-              .setCustomId('createStack')
-              .setTitle('Create New Stack')
-            
-          const pcInput = new TextInputBuilder()
-            .setCustomId('pcs')
-            .setLabel('Confirm the list of PCs')
-            .setValue(`${global.game.displayPcs()}`)
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true);
-
-          const enemyCountInput = new TextInputBuilder()
-            .setCustomId('enemyCount')
-            .setLabel('How many enemy tokens?')
-            .setValue('1')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true);
-
-          const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
-          const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
-
-          createStackModal.addComponents(pcInputRow, enemyInputRow);
-
-          await stackConfirmation.showModal(createStackModal);
-
-          const filter = (stackConfirmation) => stackConfirmation.customId === 'createStack';
-          
-          await stackConfirmation.awaitModalSubmit({ filter, time: 15_000 })
-            .then(interaction => {
-              global.game.pcs = interaction.fields.getTextInputValue('pcs');
-              const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCount'));
-              if (enemyCount < 0) {
-                  interaction.reply({ content: 'Stack not created - You must enter a number greater than 0' });
-              } else {
-                global.game.createStack(enemyCount);
-                interaction.reply({ content: 'New stack created. Good luck!' });
-              }
-            })
-            .catch(err => console.log('No modal submit interaction was collected'));
+        NewStackModal(stackConfirmation);
       }   
     }
   },    
