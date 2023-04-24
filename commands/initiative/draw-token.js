@@ -26,9 +26,8 @@ module.exports = {
         .addComponents(reuse, rebuild);
 
       const response = await interaction.reply({
-        content: 'Would you like to reuse the previous stack or build a new stack?',
-        components: [row],
-        ephemeral: true 
+        content: 'End of Turn.\nWould you like to reuse the previous stack or build a new stack?',
+        components: [row]
       });
 
       const stackConfirmation = await response.awaitMessageComponent();
