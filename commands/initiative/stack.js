@@ -27,7 +27,7 @@ module.exports = {
     const henchmanCountInput = new TextInputBuilder()
       .setCustomId('henchCount')
       .setLabel('How many henchman tokens?')
-      .setValue('1')
+      .setValue('0')
       .setStyle(TextInputStyle.Short)
       .setRequired(true);
 
