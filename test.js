@@ -38,6 +38,28 @@ test('builds a default stack when given a number of enemies', t => {
   t.assert(game.defaultStack[0] != 'End of Turn');
 });
 
+test('builds a default stack when given a number of henchman', t => {
+  const pcNames = 'Ringo,Stevie,Blue';
+  const pcTokenCount = 2;
+  const totalPcTokenCount = (stringToArray(pcNames).length) * pcTokenCount;
+  const enemyCount = 3;
+  const henchCount = 1;
+
+  const game = new Game(pcNames);
+  const startingStackLength = stringToArray(game.defaultStack).length;
+  game.createStack(enemyCount, henchCount);
+  const enemyTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Enemy'));
+  const ringoTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Ringo'));
+  const henchTokenCount = stringToArray(game.defaultStack).filter((token => token === 'Henchman'));
+
+  t.assert(stringToArray(game.defaultStack).length === totalPcTokenCount + enemyCount + startingStackLength + henchCount); 
+  t.assert(stringToArray(game.currentStack).length === totalPcTokenCount + enemyCount + startingStackLength + henchCount); 
+  t.assert(enemyTokenCount.length === enemyCount);
+  t.assert(henchTokenCount.length === henchCount);
+  t.assert(ringoTokenCount.length === pcTokenCount);
+  t.assert(game.defaultStack[0] != 'End of Turn');
+});
+
 test('removes a token from the stack, places it current turn', t => {
   const game = new Game('Rad,Marth,Squimp');
   game.createStack(5);

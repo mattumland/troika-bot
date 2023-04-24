@@ -5,12 +5,6 @@ module.exports = {
     .setName('stack')
     .setDescription('Creates the initiative stack'),
   async execute(interaction) {
-    // use message components to ask for enemy count and buttons for using the current pc list or writing a new pc list
-    // if there are no PCs, prompt to enter pcs
-    // if there are pcs, provide a button to use the current list
-    // const enemyCount = interaction.options.getInteger('how-many-enemy-tokens', true);
-    // global.game.createStack(enemyCount);
-    // await interaction.reply('The stack is ready. Enter `draw-token` to see who is first. ')
 
     const createStackModal  = new ModalBuilder()
         .setCustomId('createStack')
@@ -30,10 +24,18 @@ module.exports = {
       .setStyle(TextInputStyle.Short)
       .setRequired(true);
 
+    const henchmanCountInput = new TextInputBuilder()
+      .setCustomId('henchCount')
+      .setLabel('How many henchman tokens?')
+      .setValue('1')
+      .setStyle(TextInputStyle.Short)
+      .setRequired(true);
+
     const pcInputRow = new ActionRowBuilder().addComponents(pcInput);
     const enemyInputRow = new ActionRowBuilder().addComponents(enemyCountInput);
+    const henchmanInputRow = new ActionRowBuilder().addComponents(henchmanCountInput);
 
-    createStackModal.addComponents(pcInputRow, enemyInputRow);
+    createStackModal.addComponents(pcInputRow, enemyInputRow, henchmanInputRow);
 
     await interaction.showModal(createStackModal);
 
@@ -43,10 +45,12 @@ module.exports = {
       .then(interaction => {
         global.game.pcs = interaction.fields.getTextInputValue('pcs');
         const enemyCount = parseInt(interaction.fields.getTextInputValue('enemyCount'));
+        const henchCount = parseInt(interaction.fields.getTextInputValue('henchCount'));
+
         if (enemyCount < 0) {
           interaction.reply({ content: 'Stack not created - You must enter a number greater than 0' });
         } else {
-          global.game.createStack(enemyCount);
+          global.game.createStack(enemyCount, henchCount);
           interaction.reply({ content: 'New stack created. Good luck!' });
         }
       })

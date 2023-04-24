@@ -30,7 +30,9 @@ module.exports = {
         components: [row]
       });
 
-      const stackConfirmation = await response.awaitMessageComponent();
+      const collectorFilter = i => i.user.id === interaction.user.id;
+
+      const stackConfirmation = await response.awaitMessageComponent({ filter: collectorFilter });
 
       if (stackConfirmation.customId === 'reuse') {
         global.game.currentStack = global.game.defaultStack;

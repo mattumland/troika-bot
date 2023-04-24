@@ -17,14 +17,15 @@ class Game {
     }
   }
 
-  createStack(enemyCount) {
+  createStack(enemyCount, henchCount = 0) {
     const stack = stringToArray('End of Turn')
     
     const pcStack = stringToArray(this.pcs);
     pcStack.forEach(pc => stack.unshift(pc))
 
     const enemyStack = Array(enemyCount).fill('Enemy')
-    const assembledStack = shuffleArray([...stack, ...pcStack, ...enemyStack]);
+    const henchStack = Array(henchCount).fill('Henchman')
+    const assembledStack = shuffleArray([...stack, ...pcStack, ...enemyStack, ...henchStack]);
     if (assembledStack[0] === 'End of Turn') {
       const endOfTurn = assembledStack.shift();
       const randomPosition = this.getRandomPosition(assembledStack.length)
