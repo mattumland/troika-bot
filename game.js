@@ -39,6 +39,14 @@ class Game {
     return this.pcs.replaceAll(',', ', ');
   }
 
+  displayDefaultStack() {
+    return this.defaultStack.replaceAll(',', ', ');
+  }
+
+  displayCurrentStack() {
+    return this.currentStack.replaceAll(',', ', ');
+  }
+
   drawToken() {
     const newStack = shuffleArray(stringToArray(this.currentStack));
     this.currentTurn = newStack.shift();
