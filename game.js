@@ -1,4 +1,6 @@
-const { stringToArray, arrayToString, shuffleArray } = require('./gameHelpers.js')
+const { stringToArray, arrayToString, shuffleArray, d66 } = require('./gameHelpers.js');
+const oopsValues = require('./data/oops.json');
+const randomSpellValues = require('./data/randomSpell.json');
 
 class Game {
   constructor(pcs = '', defaultStack) {
@@ -59,6 +61,24 @@ class Game {
     this.defaultStack = '';
     this.currentStack = '';
     this.currentTurn = '';
+  }
+
+  delay() {
+    // put current turn value into current stack
+  }
+
+  oops() {
+    return oopsValues[d66()];
+  }
+
+  randomSpell() {
+    return randomSpellValues[d66()];
+  }
+
+  attack(type, modifier) {
+    // type gets passed by the slash command then fed into here to find the correct table
+    // modifier can be positive or negative (for shields)
+    // mighty blow on double sixes
   }
 }
 

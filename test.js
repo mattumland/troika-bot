@@ -73,6 +73,16 @@ test('displays a formatted list of PCs', t => {
   t.assert(game.displayPcs() === 'Rad, Marth, Squimp');
 })
 
+test('returns a random oops value', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  t.truthy(game.oops());
+})
+
+test('returns a random spell', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  t.truthy(game.randomSpell());
+})
+
 // gameHelper unit tests
 
 test('converts comma separated string into an array', t => {
