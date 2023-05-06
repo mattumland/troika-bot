@@ -1,4 +1,4 @@
-const { ButtonBuilder, ButtonStyle, SlashCommandBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, ModalBuilder } = require('discord.js');
+const { ButtonBuilder, ButtonStyle, SlashCommandBuilder, ActionRowBuilder } = require('discord.js');
 const { NewStackModal } = require('../../stackModal.js')
 
 module.exports = {
@@ -13,7 +13,6 @@ module.exports = {
     } else {
       global.game.currentTurn = ''
       const reuse = new ButtonBuilder()
-
         .setCustomId('reuse')
         .setLabel('Reuse previous stack')
         .setStyle(ButtonStyle.Primary);
