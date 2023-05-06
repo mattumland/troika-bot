@@ -94,13 +94,10 @@ class Game {
     const roll = d6() + modifier;
 
     if (roll < 1) {
-      console.log(damageValues[type]["1"])
       return damageValues[type]["1"]
     } else if (roll > 6) {
-      console.log( damageValues[type]["7+"])
       return damageValues[type]["7+"]
     } else {
-      console.log(damageValues[type][roll])
       return damageValues[type][roll]
     }
   }
