@@ -21,7 +21,7 @@ const d6 = () => {
 }
 
 const twoD6 = () => {
-
+  return d6() + d6();
 }
 
 const d66 = () => {
@@ -30,4 +30,4 @@ const d66 = () => {
   return `${firstDigit}${secondDigit}`
 }
 
-module.exports = { stringToArray, arrayToString, shuffleArray, removeWhiteSpace, d66 }
+module.exports = { stringToArray, arrayToString, shuffleArray, removeWhiteSpace, d66, d6, twoD6 }

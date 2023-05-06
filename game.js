@@ -1,6 +1,7 @@
-const { stringToArray, arrayToString, shuffleArray, d66 } = require('./gameHelpers.js');
+const { stringToArray, arrayToString, shuffleArray, d66, d6, twoD6 } = require('./gameHelpers.js');
 const oopsValues = require('./data/oops.json');
 const randomSpellValues = require('./data/randomSpell.json');
+const damageValues = require('./data/damage.json');
 
 class Game {
   constructor(pcs = '', defaultStack) {
@@ -64,7 +65,12 @@ class Game {
   }
 
   delay() {
-    // put current turn value into current stack
+    const currentTurn = this.currentTurn;
+    const randomPosition = this.getRandomPosition(this.currentStack.length)
+    const newCurrentStack = stringToArray(this.currentStack)
+    newCurrentStack.splice(randomPosition, 0, currentTurn);
+    this.currentStack = arrayToString(newCurrentStack);
+    this.currentTurn = '';
   }
 
   oops() {
@@ -75,10 +81,28 @@ class Game {
     return randomSpellValues[d66()];
   }
 
-  attack(type, modifier) {
-    // type gets passed by the slash command then fed into here to find the correct table
-    // modifier can be positive or negative (for shields)
-    // mighty blow on double sixes
+  attack(modifier) {
+    const roll = twoD6();
+    if (roll === 12) {
+      return "Mighty Blow!"
+    } else {
+      return roll + modifier;
+    }
+  }
+
+  damage(type, modifier = 0) {
+    const roll = d6() + modifier;
+
+    if (roll < 1) {
+      console.log(damageValues[type]["1"])
+      return damageValues[type]["1"]
+    } else if (roll > 6) {
+      console.log( damageValues[type]["7+"])
+      return damageValues[type]["7+"]
+    } else {
+      console.log(damageValues[type][roll])
+      return damageValues[type][roll]
+    }
   }
 }
 

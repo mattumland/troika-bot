@@ -83,6 +83,18 @@ test('returns a random spell', t => {
   t.truthy(game.randomSpell());
 })
 
+test('returns a number in the correct range when rolling at damage', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  const damage = game.damage("small-beast");
+  t.truthy(damage < 6 && damage > 1);
+})
+
+test('accepts modifiers when rolling at damage', t => {
+  const game = new Game('Rad,Marth,Squimp');
+  const damage = game.damage("pistolet", -1);
+  t.truthy(damage < 12 && damage > 1);
+})
+
 // gameHelper unit tests
 
 test('converts comma separated string into an array', t => {
