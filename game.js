@@ -21,7 +21,7 @@ class Game {
   }
 
   createStack(enemyCount, henchCount = 0) {
-    const stack = stringToArray('End of Turn')
+    const stack = stringToArray('End of the Round')
     
     const pcStack = stringToArray(this.pcs);
     pcStack.forEach(pc => stack.unshift(pc))
@@ -29,7 +29,7 @@ class Game {
     const enemyStack = Array(enemyCount).fill('Enemy')
     const henchStack = Array(henchCount).fill('Henchman')
     const assembledStack = shuffleArray([...stack, ...pcStack, ...enemyStack, ...henchStack]);
-    if (assembledStack[0] === 'End of Turn') {
+    if (assembledStack[0] === 'End of the Round') {
       const endOfTurn = assembledStack.shift();
       const randomPosition = this.getRandomPosition(assembledStack.length)
       assembledStack.splice(randomPosition, 0, endOfTurn);
@@ -81,12 +81,12 @@ class Game {
     return randomSpellValues[d66()];
   }
 
-  attack(modifier) {
+  attack(modifier = 0) {
     const roll = twoD6();
     if (roll === 12) {
       return "Mighty Blow!"
     } else {
-      return roll + modifier;
+      return `${roll} + ${modifier} = ${roll + modifier}`;
     }
   }
 

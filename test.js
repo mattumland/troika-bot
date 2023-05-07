@@ -35,7 +35,7 @@ test('builds a default stack when given a number of enemies', t => {
   t.assert(stringToArray(game.currentStack).length === totalPcTokenCount + enemyCount + startingStackLength); 
   t.assert(enemyTokenCount.length === enemyCount);
   t.assert(ringoTokenCount.length === pcTokenCount);
-  t.assert(game.defaultStack[0] != 'End of Turn');
+  t.assert(game.defaultStack[0] != 'End of the Round');
 });
 
 test('builds a default stack when given a number of henchman', t => {
@@ -57,7 +57,7 @@ test('builds a default stack when given a number of henchman', t => {
   t.assert(enemyTokenCount.length === enemyCount);
   t.assert(henchTokenCount.length === henchCount);
   t.assert(ringoTokenCount.length === pcTokenCount);
-  t.assert(game.defaultStack[0] != 'End of Turn');
+  t.assert(game.defaultStack[0] != 'End of the Round');
 });
 
 test('removes a token from the stack, places it current turn', t => {

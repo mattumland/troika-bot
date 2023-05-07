@@ -5,7 +5,7 @@ module.exports = {
     .setName('delay')
     .setDescription('Returns the current turn token into the stack'),
   async execute(interaction) {
-    if (global.game.currentTurn && global.game.currentTurn !== 'End of Turn') {
+    if (global.game.currentTurn && global.game.currentTurn !== 'End of the Round') {
         const delay = new ButtonBuilder()
         .setCustomId('delay')
         .setLabel('Yes, delay my action')
