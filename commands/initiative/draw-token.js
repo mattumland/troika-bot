@@ -25,7 +25,7 @@ module.exports = {
         .addComponents(reuse, rebuild);
 
       const response = await interaction.reply({
-        content: 'End of the Round.\nWould you like to reuse the previous stack or build a new stack?',
+        content: '**End of the Round**.\nWould you like to reuse the previous stack or build a new stack?',
         components: [row]
       });
 
