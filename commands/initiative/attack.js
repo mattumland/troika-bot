@@ -19,8 +19,6 @@ module.exports = {
         { name: 'Roll', value: result.roll.toString(), inline: true },
         { name: 'Modifier', value: result.modifier.toString(), inline: true }
       )
-      .setFooter({text: `Rolled by ${interaction.user.username}`})
-
     if (result.total === "Mighty Blow!") {
       attackEmbed.setImage("https://i.imgur.com/AfFp7pu.png")
     }
