@@ -16,8 +16,8 @@ module.exports = {
       .setColor('Red')
       .setTitle(result.total.toString())
       .addFields(
-        { name: 'Roll', value: result.roll, inline: true },
-        { name: 'Modifier', value: result.modifier, inline: true }
+        { name: 'Roll', value: result.roll.toString(), inline: true },
+        { name: 'Modifier', value: result.modifier.toString(), inline: true }
       )
       .setFooter({text: `Rolled by ${interaction.user.username}`})
 
