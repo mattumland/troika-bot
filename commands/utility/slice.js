@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { exampleEmbed } = require('../../embed.js')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,7 +15,6 @@ module.exports = {
 			)
 
 		await interaction.reply({ embeds: [embed] })
-			// .then(() => console.log('Reply sent.'))
-			// .catch(console.error);
-			},
+			.catch(console.error);
+	},
 };

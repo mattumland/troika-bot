@@ -83,10 +83,16 @@ class Game {
 
   attack(modifier = 0) {
     const roll = twoD6();
+    let result
     if (roll === 12) {
-      return "Mighty Blow!"
+      result = "Mighty Blow!"
     } else {
-      return `${roll} + ${modifier} = ${roll + modifier}`;
+      result = roll + modifier
+    }
+    return {
+      total: result,
+      roll: roll,
+      modifier: modifier
     }
   }
 

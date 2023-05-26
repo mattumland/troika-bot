@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,6 +10,22 @@ module.exports = {
       .setRequired(true)),
   async execute(interaction) {
     const modifier = interaction.options.getInteger('modifier');
-    await interaction.reply(global.game.attack(modifier).toString());
+    const result = global.game.attack(modifier);
+
+    const attackEmbed = new EmbedBuilder()
+      .setColor('Red')
+      .setTitle(result.total)
+      .addFields(
+        { name: 'Roll', value: result.roll, inline: true },
+        { name: 'Modifier', value: result.modifier, inline: true }
+      )
+      .setFooter({text: `Rolled by ${interaction.user.username}`})
+
+    if (result.total === "Mighty Blow!") {
+      attackEmbed.setImage("https://i.imgur.com/AfFp7pu.png")
+    }
+
+    await interaction.reply({ embeds: [attackEmbed] })
+      .catch(console.error)
   },
 };
