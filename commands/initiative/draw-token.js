@@ -1,4 +1,4 @@
-const { ButtonBuilder, ButtonStyle, SlashCommandBuilder, ActionRowBuilder } = require('discord.js');
+const { ButtonBuilder, ButtonStyle, SlashCommandBuilder, ActionRowBuilder, EmbedBuilder } = require('discord.js');
 const { NewStackModal } = require('../../stackModal.js')
 
 module.exports = {
@@ -8,7 +8,16 @@ module.exports = {
   async execute(interaction) {
     global.game.drawToken();
     if (global.game.currentTurn !== 'End of the Round') {
-      await interaction.reply(`${global.game.currentTurn}`)
+      const turnEmbed = new EmbedBuilder()
+      .setTitle(global.game.currentTurn)
+      if (global.game.currentTurn === 'Enemy') {
+        turnEmbed.setColor('Red')
+      } else if (global.game.currentTurn === 'Henchman') {
+        turnEmbed.setColor('Green')
+      } else {
+        turnEmbed.setColor('Blurple')
+      }
+      await interaction.reply({ embeds: [turnEmbed] })
     } else {
       global.game.currentTurn = ''
       const reuse = new ButtonBuilder()

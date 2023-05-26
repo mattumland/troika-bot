@@ -13,7 +13,7 @@ module.exports = {
     const result = global.game.attack(modifier);
 
     const attackEmbed = new EmbedBuilder()
-      .setColor('Red')
+      .setColor('DarkRed')
       .setTitle(result.total.toString())
       .addFields(
         { name: 'Roll', value: result.roll.toString(), inline: true },
