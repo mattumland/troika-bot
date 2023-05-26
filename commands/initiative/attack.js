@@ -14,7 +14,7 @@ module.exports = {
 
     const attackEmbed = new EmbedBuilder()
       .setColor('Red')
-      .setTitle(result.total)
+      .setTitle(result.total.toString())
       .addFields(
         { name: 'Roll', value: result.roll, inline: true },
         { name: 'Modifier', value: result.modifier, inline: true }
