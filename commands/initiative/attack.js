@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { randomImage } = require('../../randomImage.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
         { name: 'Modifier', value: result.modifier.toString(), inline: true }
       )
     if (result.total === "Mighty Blow!") {
-      attackEmbed.setImage("https://i.imgur.com/AfFp7pu.png")
+      attackEmbed.setImage(randomImage())
     }
 
     await interaction.reply({ embeds: [attackEmbed] })
