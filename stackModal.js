@@ -7,7 +7,7 @@ const NewStackModal = async (interaction) => {
       
   const pcInput = new TextInputBuilder()
     .setCustomId('pcs')
-    .setLabel('Confirm the list of PCs')
+    .setLabel('List the PCs, separated by commas')
     .setValue(`${global.game.displayPcs()}`)
     .setStyle(TextInputStyle.Short)
     .setRequired(true);

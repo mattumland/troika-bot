@@ -32,7 +32,7 @@ class Game {
     if (assembledStack[0] === 'End of the Round') {
       const endOfTurn = assembledStack.shift();
       const randomPosition = this.getRandomPosition(assembledStack.length)
-      assembledStack.splice(randomPosition, 0, endOfTurn);
+      assembledStack.splice(randomPosition, 0, endOfTurn); 
     }
     this.defaultStack = arrayToString(assembledStack);
     this.currentStack = arrayToString(assembledStack);
