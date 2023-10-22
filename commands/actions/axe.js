@@ -12,7 +12,7 @@ module.exports = {
   async execute(interaction) {
     const modifier = interaction.options.getInteger('modifier');
     const result = global.game.damage('axe', modifier);
-
+    console.log("axe", result)
     const damageEmbed = new EmbedBuilder()
       .setColor('Red')
       .setTitle(`${result.toString()} damage`)

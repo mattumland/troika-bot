@@ -113,3 +113,15 @@ test('removes white space from user pc name string', t => {
   const pcNames = 'Ringo,  Stevie,  Blue ';
   t.falsy(removeWhiteSpace(pcNames).includes(' '))
 })
+
+test.only('returns axe damage', t => {
+  const game = new Game();
+  const type = "axe"
+  let result = game.damage(type, 0)
+  console.log("result", result)
+  t.assert(result > 0)
+
+  result = game.damage(type, 2)
+  console.log('result with modifier', result)
+  t.assert(result > 5)
+})
